@@ -3,3 +3,5 @@ dist
 .vite
 *.log
 sidenote.zip
+.claude
+poster/index.html

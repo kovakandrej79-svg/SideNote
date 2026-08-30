@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "icons": "node scripts/make-icons.mjs",
+    "poster": "node scripts/make-posters.mjs && node scripts/serve-poster.mjs",
     "zip": "npm run build && node scripts/zip.mjs",
     "build:only": "vite build",
     "typecheck": "tsc --noEmit"
