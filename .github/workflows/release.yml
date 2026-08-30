@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: cd dist && zip -r ../context-lexicon.zip .
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: context-lexicon.zip
+          generate_release_notes: true
+          body: |
+            ## 安装
+
+            1. 下载下面的 `context-lexicon.zip` 并解压
+            2. 打开 `chrome://extensions`，右上角开启**开发者模式**
+            3. 点**加载已解压的扩展程序**，选中解压出来的文件夹
+            4. 设置页会自动打开，填入你自己的 [DeepSeek API Key](https://platform.deepseek.com/api_keys)
