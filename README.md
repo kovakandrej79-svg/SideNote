@@ -86,7 +86,7 @@ Sidenote 想做的事很简单：**让这个动作短到不构成打断**。划�
 **方式 B：从源码构建**
 
 ```bash
-git clone https://github.com/zzkws/sidenote.git
+git clone https://github.com/zzkws/Sidenote.git
 cd sidenote
 npm install
 npm run build
