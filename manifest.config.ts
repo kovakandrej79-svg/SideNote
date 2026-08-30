@@ -3,7 +3,7 @@ import pkg from "./package.json";
 
 export default defineManifest({
   manifest_version: 3,
-  name: "划词旁注 · Sidenote",
+  name: "划词旁注 · SideNote",
   version: pkg.version,
   description: pkg.description,
 
@@ -35,7 +35,7 @@ export default defineManifest({
   },
 
   action: {
-    default_title: "划词旁注 设置",
+    default_title: "划词旁注 · SideNote 设置",
     default_icon: {
       16: "icons/icon16.png",
       32: "icons/icon32.png",

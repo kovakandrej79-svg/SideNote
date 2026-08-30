@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="public/icons/icon128.png" width="88" alt="Sidenote">
+<img src="public/icons/icon128.png" width="88" alt="SideNote">
 
-# 划词旁注 · Sidenote
+# 划词旁注 · SideNote
 
 **读英文文章时划中一个词，右边就给出它在这句话里的意思。**
 
@@ -23,7 +23,7 @@ Chrome 扩展 · 用你自己的 DeepSeek API Key · 数据不经过任何第三
 
 你可以停下来去查——切到词典，或者把这一段贴给 ChatGPT 问一句。查完再切回来，刚才读到哪、上一句在讲什么，得重新找回来。一篇论文卡十几次，读完已经挺累了。这些零散的、每次都不算大的中断，加起来就是理解这篇文章的障碍。
 
-Sidenote 想做的事很简单：**让这个动作短到不构成打断**。划中那个词，答案出现在正文右边，视线不用离开文章。
+SideNote 想做的事很简单：**让这个动作短到不构成打断**。划中那个词，答案出现在正文右边，视线不用离开文章。
 
 而且它读得到你正在看的这段上下文，所以给的不是通用释义，是**这个词在这一句里的意思**。
 
@@ -86,7 +86,7 @@ Sidenote 想做的事很简单：**让这个动作短到不构成打断**。划�
 **方式 B：从源码构建**
 
 ```bash
-git clone https://github.com/zzkws/Sidenote.git
+git clone https://github.com/zzkws/SideNote.git
 cd sidenote
 npm install
 npm run build
@@ -213,13 +213,13 @@ MIT
 
 # English
 
-**划词旁注 · Sidenote** — a Chrome extension for Chinese speakers reading English text. Select a word and a sidenote appears beside the paragraph: what it means *in that sentence*, an English gloss of that sense, and where the word comes from. Explanations are in Chinese.
+**划词旁注 · SideNote** — a Chrome extension for Chinese speakers reading English text. Select a word and a sidenote appears beside the paragraph: what it means *in that sentence*, an English gloss of that sense, and where the word comes from. Explanations are in Chinese.
 
 ## Why
 
 When you are reading a paper, what stops you is often a single word. You can pause and go look it up — switch to a dictionary, or paste the paragraph into ChatGPT. Then you come back and have to find your place again. Do that fifteen times in one paper and the reading itself becomes work.
 
-Sidenote tries to make that step short enough that it is not an interruption. Select the word; the answer appears next to the text; your eyes stay on the page. And because it can see the surrounding context, what you get is the meaning of that word *here*, not a general definition.
+SideNote tries to make that step short enough that it is not an interruption. Select the word; the answer appears next to the text; your eyes stay on the page. And because it can see the surrounding context, what you get is the meaning of that word *here*, not a general definition.
 
 It always answers the same three things — meaning in this sentence, an English gloss of this sense, and the word's origin — whether you are reading an AI paper, a legal document, or a medical review.
 
