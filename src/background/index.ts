@@ -84,7 +84,7 @@ const LABELS = ["① system", "② user 全文", "③ assistant 回执", "④ us
 /** debug 开关打开时，把真实发出去的四条消息完整打出来 */
 function dumpContext(word: string, messages: ChatMessage[]) {
   const chars = messages.reduce((n, m) => n + m.content.length, 0);
-  console.group(`[Context Lexicon] 选中 "${word}" —— 共 ${chars.toLocaleString()} 字符`);
+  console.group(`[Sidenote] 选中 "${word}" —— 共 ${chars.toLocaleString()} 字符`);
 
   messages.forEach((m, i) => {
     console.log(

@@ -1,4 +1,4 @@
-export const PORT_NAME = "context-lexicon";
+export const PORT_NAME = "sidenote";
 
 export type ModelId = "deepseek-v4-flash" | "deepseek-v4-pro";
 

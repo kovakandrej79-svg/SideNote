@@ -57,7 +57,7 @@ export function render(src: string, katex: Katex | null): string {
             throwOnError: false,
           }),
         );
-        return `%%CLMATH${slots.length - 1}%%`;
+        return `%%SNMATH${slots.length - 1}%%`;
       } catch {
         return whole; // 流式输出中途公式还不完整，先留着
       }
@@ -65,7 +65,7 @@ export function render(src: string, katex: Katex | null): string {
   );
 
   const html = (marked.parse(staged, { async: false }) as string).replace(
-    /%%CLMATH(\d+)%%/g,
+    /%%SNMATH(\d+)%%/g,
     (_: string, i: string) => slots[Number(i)] ?? "",
   );
 
@@ -89,5 +89,5 @@ export function Markdown({ source }: { source: string }) {
   }, [needsMath, katex]);
 
   const html = useMemo(() => render(source, katex), [source, katex]);
-  return <div class="cl-md" dangerouslySetInnerHTML={{ __html: html }} />;
+  return <div class="sn-md" dangerouslySetInnerHTML={{ __html: html }} />;
 }

@@ -1,12 +1,14 @@
 <div align="center">
 
-<img src="public/icons/icon128.png" width="88" alt="Context Lexicon">
+<img src="public/icons/icon128.png" width="88" alt="Sidenote">
 
-# Context Lexicon · 语境词典
+# 划词旁注 · Sidenote
 
-**读英文论文时，选中一个词，右边直接告诉你它在这句话里是什么意思、背后有什么文化和技术来历。**
+**读英文文章时划中一个词，右边给你它在这句话里的意思、英文释意，和它背后的来历。**
 
-一个只做一件事的 Chrome 扩展。用你自己的 DeepSeek API Key，数据不经过任何第三方。
+像一个什么领域都懂的英文家教，指着这个词告诉你它在这儿是什么意思、为什么这么用。
+
+只做这一件事的 Chrome 扩展。用你自己的 DeepSeek API Key，数据不经过任何第三方。
 
 [快速开始](#快速开始) · [它解决什么问题](#它解决什么问题) · [效果](#效果) · [English](#english)
 
@@ -26,7 +28,7 @@
 
 第三种最容易被忽略。你查过八次 `residual`，还是记不住，因为词典只给了对应词，没告诉你**为什么英语世界要用这个词**。
 
-Context Lexicon 每次回答三件事：
+Sidenote 每次回答三件事：
 
 ```
 1. 它在这句话里是什么意思    ← 结合上下文，不是词典义
@@ -64,13 +66,13 @@ Context Lexicon 每次回答三件事：
 
 **方式 A：下载现成的**（推荐，不需要装任何开发工具）
 
-到 [Releases](../../releases) 下载最新的 `context-lexicon.zip`，解压到一个不会误删的目录。
+到 [Releases](../../releases) 下载最新的 `sidenote.zip`，解压到一个不会误删的目录。
 
 **方式 B：从源码构建**
 
 ```bash
-git clone https://github.com/zzkws/context-lexicon.git
-cd context-lexicon
+git clone https://github.com/zzkws/sidenote.git
+cd sidenote
 npm install
 npm run build
 ```
@@ -176,7 +178,7 @@ service worker（后台）
 ```bash
 npm run dev      # Vite + CRXJS，content script 支持热更新
 npm run build    # 类型检查 + 构建到 dist/
-npm run zip      # 构建并打包成 context-lexicon.zip
+npm run zip      # 构建并打包成 sidenote.zip
 npm run icons    # 重新生成图标
 ```
 
@@ -196,7 +198,7 @@ MIT
 
 # English
 
-**A Chrome extension for Chinese speakers reading English technical papers.** Select a word and a panel explains what it means *in that sentence*, plus the etymology or field-specific origin behind it. Output is in Chinese.
+**A Chrome extension for Chinese speakers reading English text.** Select a word and a sidenote appears explaining what it means *in that sentence*, an English gloss of that sense, and where the word comes from. Output is in Chinese.
 
 ## Why
 
@@ -206,11 +208,11 @@ What stops you when reading English papers is usually not a word you have never 
 - **A term of art** whose literal meaning you know but whose referent you do not (`indexer`, `GRPO`)
 - **A word you have looked up eight times and still cannot retain** (`residual`, `frontier`) — because a dictionary gives you a translation, never *why English chose that word*
 
-Context Lexicon always answers three things: what it means here, an English gloss of this specific sense, and where the word comes from.
+Sidenote always answers three things: what it means here, an English gloss of this specific sense, and where the word comes from.
 
 ## Quick start
 
-1. Download `context-lexicon.zip` from [Releases](../../releases) and unzip — or build from source with `npm install` then `npm run build`
+1. Download `sidenote.zip` from [Releases](../../releases) and unzip — or build from source with `npm install` then `npm run build`
 2. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, select the folder
 3. The options page opens automatically. Paste your own [DeepSeek API key](https://platform.deepseek.com/api_keys), click 测试连接 to verify, then 保存
 4. Select any English word on any page

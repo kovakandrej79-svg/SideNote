@@ -1,9 +1,9 @@
 {
-  "name": "context-lexicon",
+  "name": "sidenote",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "选中英文词句，结合全文语境给出释义、语感与文化背景",
+  "description": "读英文文章时划中一个词，给出它在这句话里的意思、英文释意，和它背后的来历",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

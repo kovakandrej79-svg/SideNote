@@ -25,7 +25,7 @@ const MAX_H = 560;
 /**
  * 正文第一行文字的上缘，距离卡片上缘有多远。
  *
- * 只用 .cl-body 自己的几何（顶部位置 + 内边距 + 半行距），不看里面装的是什么。
+ * 只用 .sn-body 自己的几何（顶部位置 + 内边距 + 半行距），不看里面装的是什么。
  * 早先版本量的是"第一个子元素"，于是骨架屏换成正文时这个值会变，
  * 卡片就会瞬移一下 —— 现在无论内容怎么变，这个数都是常量。
  */
@@ -110,26 +110,26 @@ export function Popup({ onClose, onOpenOptions, onRetry }: Props) {
   if (!shown) return null;
 
   return (
-    <div class="cl-card" ref={cardRef}>
-      <div class="cl-head">
-        <span class="cl-word">{word.value}</span>
-        {st === "streaming" && <span class="cl-tag">生成中</span>}
-        <button class="cl-x" onClick={onClose} title="关闭 (Esc)" type="button">
+    <div class="sn-card" ref={cardRef}>
+      <div class="sn-head">
+        <span class="sn-word">{word.value}</span>
+        {st === "streaming" && <span class="sn-tag">生成中</span>}
+        <button class="sn-x" onClick={onClose} title="关闭 (Esc)" type="button">
           ×
         </button>
       </div>
 
-      <div class="cl-body" ref={bodyRef}>
+      <div class="sn-body" ref={bodyRef}>
         {st === "error" && err ? (
-          <div class="cl-error">
+          <div class="sn-error">
             <strong>{errorTitle(err.code)}</strong>
             <p>{err.message}</p>
             {err.code === "no-key" ? (
-              <button class="cl-btn" onClick={onOpenOptions} type="button">
+              <button class="sn-btn" onClick={onOpenOptions} type="button">
                 打开设置
               </button>
             ) : (
-              <button class="cl-btn" onClick={onRetry} type="button">
+              <button class="sn-btn" onClick={onRetry} type="button">
                 重试
               </button>
             )}
@@ -137,10 +137,10 @@ export function Popup({ onClose, onOpenOptions, onRetry }: Props) {
         ) : body ? (
           <>
             <Markdown source={body} />
-            {st === "streaming" && <span class="cl-caret" />}
+            {st === "streaming" && <span class="sn-caret" />}
           </>
         ) : (
-          <div class="cl-skeleton">
+          <div class="sn-skeleton">
             <i />
             <i />
             <i />

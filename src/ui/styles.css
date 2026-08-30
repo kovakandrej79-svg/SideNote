@@ -4,7 +4,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-.cl-card {
+.sn-card {
   position: fixed;
   z-index: 2147483647;
   width: 400px;
@@ -16,10 +16,10 @@
     "Microsoft YaHei", "Helvetica Neue", sans-serif;
   font-size: 14px;
   line-height: 1.65;
-  color: var(--cl-fg);
+  color: var(--sn-fg);
 
-  background: var(--cl-bg);
-  border: 1px solid var(--cl-border);
+  background: var(--sn-bg);
+  border: 1px solid var(--sn-border);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 12px 40px rgba(0, 0, 0, 0.14);
 
@@ -32,41 +32,41 @@
 }
 
 /* ---------- 主题 ---------- */
-.cl-card {
-  --cl-bg: #ffffff;
-  --cl-fg: #1f2328;
-  --cl-muted: #6b7280;
-  --cl-border: #e4e6ea;
-  --cl-subtle: #f6f7f9;
-  --cl-accent: #2563eb;
-  --cl-danger: #dc2626;
+.sn-card {
+  --sn-bg: #ffffff;
+  --sn-fg: #1f2328;
+  --sn-muted: #6b7280;
+  --sn-border: #e4e6ea;
+  --sn-subtle: #f6f7f9;
+  --sn-accent: #2563eb;
+  --sn-danger: #dc2626;
 }
 
 @media (prefers-color-scheme: dark) {
-  .cl-card {
-    --cl-bg: #1f2023;
-    --cl-fg: #e6e7ea;
-    --cl-muted: #9aa0a8;
-    --cl-border: #34363b;
-    --cl-subtle: #2a2c30;
-    --cl-accent: #7aa2f7;
-    --cl-danger: #f87171;
+  .sn-card {
+    --sn-bg: #1f2023;
+    --sn-fg: #e6e7ea;
+    --sn-muted: #9aa0a8;
+    --sn-border: #34363b;
+    --sn-subtle: #2a2c30;
+    --sn-accent: #7aa2f7;
+    --sn-danger: #f87171;
   }
 }
 
 /* ---------- 头部 ---------- */
-.cl-head {
+.sn-head {
   flex: none;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  border-bottom: 1px solid var(--cl-border);
-  background: var(--cl-bg);
+  border-bottom: 1px solid var(--sn-border);
+  background: var(--sn-bg);
   border-radius: 12px 12px 0 0;
 }
 
-.cl-word {
+.sn-word {
   flex: 1;
   min-width: 0;
   font-weight: 600;
@@ -76,16 +76,16 @@
   text-overflow: ellipsis;
 }
 
-.cl-tag {
+.sn-tag {
   flex: none;
   font-size: 11px;
-  color: var(--cl-muted);
+  color: var(--sn-muted);
   padding: 2px 6px;
-  border: 1px solid var(--cl-border);
+  border: 1px solid var(--sn-border);
   border-radius: 5px;
 }
 
-.cl-x {
+.sn-x {
   flex: none;
   width: 24px;
   height: 24px;
@@ -94,15 +94,15 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: var(--cl-muted);
+  color: var(--sn-muted);
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
 }
-.cl-x:hover { background: var(--cl-subtle); color: var(--cl-fg); }
+.sn-x:hover { background: var(--sn-subtle); color: var(--sn-fg); }
 
 /* ---------- 主体 ---------- */
-.cl-body {
+.sn-body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -110,26 +110,26 @@
   padding: 12px 14px 16px;
 }
 
-.cl-body::-webkit-scrollbar { width: 8px; }
-.cl-body::-webkit-scrollbar-thumb {
-  background: var(--cl-border);
+.sn-body::-webkit-scrollbar { width: 8px; }
+.sn-body::-webkit-scrollbar-thumb {
+  background: var(--sn-border);
   border-radius: 4px;
 }
 
 /* ---------- 骨架屏 ---------- */
-.cl-skeleton { display: flex; flex-direction: column; gap: 9px; padding-top: 2px; }
-.cl-skeleton i {
+.sn-skeleton { display: flex; flex-direction: column; gap: 9px; padding-top: 2px; }
+.sn-skeleton i {
   display: block;
   height: 11px;
   border-radius: 5px;
-  background: linear-gradient(90deg, var(--cl-subtle) 25%, var(--cl-border) 50%, var(--cl-subtle) 75%);
+  background: linear-gradient(90deg, var(--sn-subtle) 25%, var(--sn-border) 50%, var(--sn-subtle) 75%);
   background-size: 240% 100%;
   animation: cl-shimmer 1.3s linear infinite;
 }
-.cl-skeleton i:nth-child(2) { width: 88%; }
-.cl-skeleton i:nth-child(3) { width: 66%; }
-.cl-skeleton i:nth-child(4) { width: 92%; }
-.cl-skeleton i:nth-child(5) { width: 48%; }
+.sn-skeleton i:nth-child(2) { width: 88%; }
+.sn-skeleton i:nth-child(3) { width: 66%; }
+.sn-skeleton i:nth-child(4) { width: 92%; }
+.sn-skeleton i:nth-child(5) { width: 48%; }
 
 @keyframes cl-shimmer {
   from { background-position: 120% 0; }
@@ -137,90 +137,90 @@
 }
 
 /* ---------- Markdown ---------- */
-.cl-md > *:first-child { margin-top: 0; }
-.cl-md > *:last-child  { margin-bottom: 0; }
+.sn-md > *:first-child { margin-top: 0; }
+.sn-md > *:last-child  { margin-bottom: 0; }
 
-.cl-md h3 {
+.sn-md h3 {
   margin: 0 0 8px;
   font-size: 16px;
   font-weight: 650;
   letter-spacing: -0.01em;
 }
 
-.cl-md blockquote {
+.sn-md blockquote {
   margin: 0 0 14px;
   padding: 9px 12px;
   border: 0;
-  border-left: 3px solid var(--cl-accent);
+  border-left: 3px solid var(--sn-accent);
   border-radius: 0 7px 7px 0;
-  background: var(--cl-subtle);
-  color: var(--cl-fg);
+  background: var(--sn-subtle);
+  color: var(--sn-fg);
 }
-.cl-md blockquote p { margin: 0; }
+.sn-md blockquote p { margin: 0; }
 
-.cl-md p { margin: 0 0 10px; }
+.sn-md p { margin: 0 0 10px; }
 
 /* 模型用 **粗体** 做小节标题 */
-.cl-md p > strong:only-child {
+.sn-md p > strong:only-child {
   display: block;
   margin-top: 14px;
   font-size: 12px;
   font-weight: 650;
   letter-spacing: 0.04em;
-  color: var(--cl-muted);
+  color: var(--sn-muted);
 }
 
-.cl-md ul, .cl-md ol { margin: 0 0 10px; padding-left: 20px; }
-.cl-md li { margin: 3px 0; }
+.sn-md ul, .sn-md ol { margin: 0 0 10px; padding-left: 20px; }
+.sn-md li { margin: 3px 0; }
 
-.cl-md code {
+.sn-md code {
   padding: 1px 5px;
   border-radius: 4px;
-  background: var(--cl-subtle);
+  background: var(--sn-subtle);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.9em;
 }
 
-.cl-md em { color: var(--cl-muted); }
-.cl-md a { color: var(--cl-accent); }
-.cl-md hr { border: 0; border-top: 1px solid var(--cl-border); margin: 14px 0; }
+.sn-md em { color: var(--sn-muted); }
+.sn-md a { color: var(--sn-accent); }
+.sn-md hr { border: 0; border-top: 1px solid var(--sn-border); margin: 14px 0; }
 
 /* 流式输出时的光标 */
-.cl-caret {
+.sn-caret {
   display: inline-block;
   width: 2px;
   height: 1em;
   margin-left: 1px;
   vertical-align: -0.15em;
-  background: var(--cl-accent);
+  background: var(--sn-accent);
   animation: cl-blink 1s step-end infinite;
 }
 @keyframes cl-blink { 50% { opacity: 0; } }
 
 /* ---------- 错误 ---------- */
-.cl-error { color: var(--cl-fg); }
-.cl-error strong { color: var(--cl-danger); display: block; margin-bottom: 4px; }
-.cl-error p { margin: 0 0 12px; color: var(--cl-muted); }
+.sn-error { color: var(--sn-fg); }
+.sn-error strong { color: var(--sn-danger); display: block; margin-bottom: 4px; }
+.sn-error p { margin: 0 0 12px; color: var(--sn-muted); }
 
-.cl-btn {
+.sn-btn {
   padding: 6px 12px;
-  border: 1px solid var(--cl-border);
+  border: 1px solid var(--sn-border);
   border-radius: 7px;
-  background: var(--cl-subtle);
-  color: var(--cl-fg);
+  background: var(--sn-subtle);
+  color: var(--sn-fg);
   font: inherit;
   font-size: 13px;
   cursor: pointer;
 }
-.cl-btn:hover { border-color: var(--cl-accent); color: var(--cl-accent); }
+.sn-btn:hover { border-color: var(--sn-accent); color: var(--sn-accent); }
 
 /* ---------- 数学公式（KaTeX 的 MathML 输出，浏览器原生渲染） ---------- */
-.cl-md math {
+.sn-md math {
   font-size: 1.02em;
 }
 
-.cl-md .katex-display,
-.cl-md math[display="block"] {
+.sn-md .katex-display,
+.sn-md math[display="block"] {
   display: block;
   margin: 10px 0;
   overflow-x: auto;
@@ -228,6 +228,6 @@
 }
 
 /* 行内公式跟中文混排时不要顶行 */
-.cl-md math[display="inline"] {
+.sn-md math[display="inline"] {
   vertical-align: -0.1em;
 }

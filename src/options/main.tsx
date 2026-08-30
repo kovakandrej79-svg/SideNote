@@ -58,8 +58,8 @@ function Options() {
 
   return (
     <div class="wrap">
-      <h1>Context Lexicon</h1>
-      <p class="sub">选中英文词句，结合整篇文章的语境给出释义、语感与文化背景。</p>
+      <h1>Sidenote</h1>
+      <p class="sub">划中一个英文词，给出它在这句话里的意思、英文释意，和它背后的来历。</p>
 
       <div class="field">
         <label for="key">DeepSeek API Key</label>

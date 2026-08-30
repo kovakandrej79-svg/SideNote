@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, rmSync } from "node:fs";
 import { platform } from "node:os";
 
-const OUT = "context-lexicon.zip";
+const OUT = "sidenote.zip";
 if (!existsSync("dist")) {
   console.error("dist/ 不存在，先跑 npm run build");
   process.exit(1);

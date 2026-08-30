@@ -16,7 +16,7 @@ import { readSelection } from "./selection";
 /* ---------------- Shadow DOM 挂载 ---------------- */
 
 const host = document.createElement("div");
-host.id = "context-lexicon-root";
+host.id = "sidenote-root";
 host.style.cssText = "position:fixed;top:0;left:0;width:0;height:0;";
 const shadow = host.attachShadow({ mode: "open" });
 
