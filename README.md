@@ -4,59 +4,74 @@
 
 # 划词旁注 · Sidenote
 
-**读英文文章时划中一个词，右边给你它在这句话里的意思、英文释意，和它背后的来历。**
+**读英文文章时划中一个词，右边就给出它在这句话里的意思。**
 
-像一个什么领域都懂的英文家教，指着这个词告诉你它在这儿是什么意思、为什么这么用。
+像一个什么领域都懂的英文家教坐在旁边——你指着一个词，
+他告诉你这里它是什么意思、为什么这么用、这个说法是从哪来的。
 
-只做这一件事的 Chrome 扩展。用你自己的 DeepSeek API Key，数据不经过任何第三方。
+Chrome 扩展 · 用你自己的 DeepSeek API Key · 数据不经过任何第三方
 
-[快速开始](#快速开始) · [它解决什么问题](#它解决什么问题) · [效果](#效果) · [English](#english)
+[快速开始](#快速开始) · [它解决什么](#它解决什么) · [看看效果](#看看效果) · [English](#english)
 
 </div>
 
 ---
 
-## 它解决什么问题
+## 它解决什么
 
-读英文技术文章时，卡住你的通常不是"完全没见过的词"，而是这三种：
+读英文论文的时候，卡住你的往往只是一个词。
 
-| 情况 | 例子 | 词典给你什么 | 这个插件给你什么 |
-|---|---|---|---|
-| **生词**，读到就断了 | `inklings` | 暗示；略知 | 在这句里是"刚冒头的一点苗头"，以及它源自"低声耳语"的来历 |
-| **专业名词**，字面认识但不知道指什么 | `indexer`、`GRPO` | 查不到，或给个无关义项 | 在 MoE 里它是把 token 分派给专家的那个"分拣员" |
-| **知道意思，但记不牢** | `residual`、`frontier` | 残差；边疆 | 为什么叫残差、frontier 在美国语境里是"西部拓荒线"——有了来历才记得住 |
+你可以停下来去查——切到词典，或者把这一段贴给 ChatGPT 问一句。查完再切回来，刚才读到哪、上一句在讲什么，得重新找回来。一篇论文卡十几次，读完已经挺累了。这些零散的、每次都不算大的中断，加起来就是理解这篇文章的障碍。
 
-第三种最容易被忽略。你查过八次 `residual`，还是记不住，因为词典只给了对应词，没告诉你**为什么英语世界要用这个词**。
+Sidenote 想做的事很简单：**让这个动作短到不构成打断**。划中那个词，答案出现在正文右边，视线不用离开文章。
 
-Sidenote 每次回答三件事：
+而且它读得到你正在看的这段上下文，所以给的不是通用释义，是**这个词在这一句里的意思**。
+
+### 三种卡壳
+
+| 你的处境 | 例子 |
+|---|---|
+| 这个词没见过，读到就断了 | `inklings` |
+| 每个字母都认识，但不知道在这一行里指什么 | `indexer`、`GRPO` |
+| 意思是知道的，可就是记不牢，查过好几次还是眼生 | `residual`、`frontier` |
+
+第三种最值得说一句。记不牢往往不是不够用功，而是手上只有一个对应词，缺了它的来历。知道 `residual` 来自拉丁语"留下、剩余"、知道统计里残差指观测值与拟合值的差，这个词才在脑子里有了位置，下次见到就不用重查。
+
+所以每次划词，它固定回答三件事：
 
 ```
-1. 它在这句话里是什么意思    ← 结合上下文，不是词典义
+1. 它在这句话里是什么意思    ← 结合上下文，不是泛泛的释义
 2. 英文释意                  ← 只写此处这一个义项
 3. 文化拆解                  ← 词源、典故，或这个圈子当初为什么造它
 ```
 
+不论你读的是 AI 论文、法律文书还是医学综述，它都在同一个位置给你这三样。
+
 ---
 
-## 效果
+## 看看效果
 
-以下截图取自 [DeepSeek-V4 技术报告](https://arxiv.org/html/2606.19348v1)。
+下面几张都截自 [DeepSeek-V4 技术报告](https://arxiv.org/html/2606.19348v1)。
 
-**专业名词** — 选中 `Hyper-Connections`，它说清这是残差连接的升级版，并拆开 "Hyper-" 前缀在数学里表示"更高维"的由来：
+**论文自造的词，查不到的那种。** `Hyper-Connections` 是这篇论文提出的新结构。它先说清这是残差连接的什么升级，再拆开 "Hyper-" 这个前缀在数学里表示"更高维"的由来。
 
 ![Hyper-Connections](docs/screenshots/hyper-connections.png)
 
-**似懂非懂的词** — 你知道 `residual` 是"残差"，但它为什么叫残差？
+**你知道它叫什么，但不知道为什么叫这个。** `residual` 就是"残差"——可为什么是"残"？拉丁语 *residere* 是"留下、剩余"，统计里残差指观测值与拟合值之差，深度学习沿用了这个意象。
 
 ![residual](docs/screenshots/residual.png)
 
-**地道表达** — `dramatic leap` 里的 leap 与 climb 相对，"爬坡是慢慢挪，跳跃是一步到位"：
+**认得，但说不出它比近义词多了什么味道。** `dramatic leap` 里的 leap 与 climb 相对——"爬坡是慢慢挪，跳跃是一步到位"，作者选它是想强调这不是渐进式改良。
 
 ![dramatic leap](docs/screenshots/dramatic-leap.png)
 
-**缩写与行话** — `FLOPs`、`GRPO`、`indexer` 这类词，词典查不到，但它知道：
+**缩写和行话。** `FLOPs` 在这一句里具体指什么，以及这个说法是 1950 年代超算性能评测留下来的。
 
 ![FLOPs](docs/screenshots/flops.png)
+
+**读到一半冒出来的算法名。** `GRPO` 是什么、为什么 DeepSeek 要在 PPO 之外另造一个——这类问题不打断阅读就能解决。
+
+![GRPO](docs/screenshots/grpo.png)
 
 ---
 
@@ -198,17 +213,15 @@ MIT
 
 # English
 
-**A Chrome extension for Chinese speakers reading English text.** Select a word and a sidenote appears explaining what it means *in that sentence*, an English gloss of that sense, and where the word comes from. Output is in Chinese.
+**划词旁注 · Sidenote** — a Chrome extension for Chinese speakers reading English text. Select a word and a sidenote appears beside the paragraph: what it means *in that sentence*, an English gloss of that sense, and where the word comes from. Explanations are in Chinese.
 
 ## Why
 
-What stops you when reading English papers is usually not a word you have never seen. It is one of these three:
+When you are reading a paper, what stops you is often a single word. You can pause and go look it up — switch to a dictionary, or paste the paragraph into ChatGPT. Then you come back and have to find your place again. Do that fifteen times in one paper and the reading itself becomes work.
 
-- **An unfamiliar word** that breaks your reading (`inklings`)
-- **A term of art** whose literal meaning you know but whose referent you do not (`indexer`, `GRPO`)
-- **A word you have looked up eight times and still cannot retain** (`residual`, `frontier`) — because a dictionary gives you a translation, never *why English chose that word*
+Sidenote tries to make that step short enough that it is not an interruption. Select the word; the answer appears next to the text; your eyes stay on the page. And because it can see the surrounding context, what you get is the meaning of that word *here*, not a general definition.
 
-Sidenote always answers three things: what it means here, an English gloss of this specific sense, and where the word comes from.
+It always answers the same three things — meaning in this sentence, an English gloss of this sense, and the word's origin — whether you are reading an AI paper, a legal document, or a medical review.
 
 ## Quick start
 
