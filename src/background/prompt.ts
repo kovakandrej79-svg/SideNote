@@ -83,41 +83,49 @@ The highest-tier configuration of DeepSeek-V4-Pro, running at maximum reasoning 
 **文化拆解**
 Pro / Max 这套后缀是消费电子传下来的——Apple 拿 Pro 标专业档、Max 标同代顶配（更早用的是 Plus），用久了整个科技行业都拿它当"同系列里更高一档"的速记。`;
 
-/** 选中处往前／往后各取多少字符。够判断语义背景即可，不必给全文 */
-const BEFORE = 750;
+/** 选中处往后再多给多少字符，让模型看到句子的下文 */
 const AFTER = 1_000;
-/** 往外扩到边界时最多多走这么远，超了就在原地切 */
+/** 往后扩到边界时最多多走这么远，超了就在原地切 */
 const SNAP_PARA = 600;
 const SNAP_SENT = 300;
 
 /**
- * 取选中处的上下文窗口。不发整篇文章 —— 十几万字符里绝大部分跟这个词无关，
- * 白花 token 还拖慢首字。窗口往外扩到段落／句子边界，避免从半句话开始。
+ * 超长文的保险丝。正常论文远达不到，命中时才降级。
  */
-export function extractWindow(article: string, paragraph: string): string {
+const MAX_CHARS = 160_000;
+const HEAD = 12_000;
+const TAIL_BEFORE = 8_000;
+/** 降级时的截断点量化到这个粒度，相邻选词才会落进同一份前缀 */
+const QUANTUM = 8_000;
+
+/**
+ * 上文全给，下文给 AFTER 个字符。
+ *
+ * 人是从上往下读的，所以第 N+1 次查词的上文，一定以第 N 次的上文为前缀。
+ * DeepSeek 的缓存按 token 前缀匹配，这个形状天然吃满 —— 越往后读，
+ * 命中的比例越高，新增的只有这一段新读到的正文。
+ * 往回翻着查也一样：更短的前缀仍然是已缓存内容的前缀，照样命中。
+ */
+export function readContext(article: string, paragraph: string): string {
   if (!article) return paragraph;
 
   const probe = paragraph.slice(0, 120);
-  const idx = probe ? article.indexOf(probe) : -1;
+  const at = probe ? article.indexOf(probe) : -1;
   // 段落在正文里定位不到（Readability 与选区不一致）时，退回文章开头
-  if (idx < 0) return `${article.slice(0, BEFORE + AFTER).trim()}……`;
+  if (at < 0) return `${article.slice(0, HEAD + AFTER).trim()}……`;
 
-  const rawStart = Math.max(0, idx - BEFORE);
-  const rawEnd = Math.min(article.length, idx + paragraph.length + AFTER);
-
-  const start = rawStart === 0 ? 0 : snapStart(article, rawStart);
+  const rawEnd = Math.min(article.length, at + paragraph.length + AFTER);
   const end = rawEnd >= article.length ? article.length : snapEnd(article, rawEnd);
-
-  const head = start > 0 ? "……" : "";
   const tail = end < article.length ? "……" : "";
-  return head + article.slice(start, end).trim() + tail;
-}
 
-function snapStart(a: string, i: number): number {
-  const para = a.lastIndexOf("\n", i);
-  if (para >= 0 && i - para < SNAP_PARA) return para + 1;
-  const sent = a.lastIndexOf(". ", i);
-  return sent >= 0 && i - sent < SNAP_SENT ? sent + 2 : i;
+  if (end <= MAX_CHARS) return article.slice(0, end).trim() + tail;
+
+  // 超长文才降级：留住开头（前缀仍然稳定）+ 选中处附近的一段。
+  // 起点量化，让相邻的词共用同一份前缀，不至于每查一个词就全量 miss。
+  const start = Math.max(HEAD, Math.floor((at - TAIL_BEFORE) / QUANTUM) * QUANTUM);
+  const head = article.slice(0, HEAD).trim();
+  const near = article.slice(start, end).trim();
+  return `${head}\n\n[……中间省略……]\n\n${near}${tail}`;
 }
 
 function snapEnd(a: string, i: number): number {
@@ -128,8 +136,7 @@ function snapEnd(a: string, i: number): number {
 }
 
 /**
- * 一条 system + 一条 user。
- * 上下文窗口排在选中词前面：同一段里查多个词时窗口一致，前缀仍能命中缓存。
+ * 一条 system + 一条 user。上文排在选中词之前，缓存才吃得到前缀。
  */
 export function buildMessages(q: Query): ChatMessage[] {
   return [
@@ -139,8 +146,8 @@ export function buildMessages(q: Query): ChatMessage[] {
       content: [
         `【文章】${q.title}`,
         "",
-        "【上下文】",
-        extractWindow(q.article, q.paragraph),
+        "【上文】",
+        readContext(q.article, q.paragraph),
         "",
         "————————————————",
         "",

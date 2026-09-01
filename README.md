@@ -122,9 +122,21 @@ Key 只存在你本机的 `chrome.storage.local`，不上传到任何地方。
 
 ## 花多少钱
 
-每次查词大约 **800～1300 输入 token + 100～250 输出 token**。按 DeepSeek 现价，读完一篇长论文查几十个词，成本在几分钱量级。
+输入大约 800 ～ 4,000 token，输出 100 ～ 250 token。按 DeepSeek 现价，读完一篇长论文查几十个词，成本在几分钱量级。
 
-省钱的关键设计：**只发选中处的上下文窗口，不发整篇文章**。一篇 26,000 字符的论文，实际发出去的只有选中处往前 750、往后 1000 字符——够模型判断语义背景，又不白花 token。
+关键在缓存。**你是从上往下读的，所以每次查词的上文，一定以上一次的上文为前缀** —— DeepSeek 的缓存按 token 前缀匹配，这个形状天然吃满。每次真正付全价的，只有你这段新读到的正文。
+
+实测在 DeepSeek-V4 技术报告上连查三个词：
+
+| 查的词 | 位置 | prompt | 缓存命中 |
+|---|---|---|---|
+| `impediment` | 第 9,287 字符 | 3,640 | 3,584（98%） |
+| `frontier` | 第 10,063 字符 | 3,771 | 3,712（98%） |
+| `Muon` | 第 1,414 字符（往回翻） | 1,511 | 1,408（93%） |
+
+往回翻着查也命中——更短的前缀仍然是已缓存内容的前缀。
+
+注意缓存写入有几秒延迟，背靠背连打两次第二次仍会 miss，正常阅读节奏下不受影响。
 
 ---
 
@@ -152,7 +164,7 @@ content script（页面内，隔离环境）
         │  chrome.runtime.connect — 长连接，支持流式
         ▼
 service worker（后台）
-  ├─ prompt.ts     组装两条消息 + 截取上下文窗口
+  ├─ prompt.ts     组装两条消息 + 取上文
   └─ deepseek.ts   SSE 流式客户端
         │
         ▼  https://api.deepseek.com/chat/completions
@@ -162,9 +174,11 @@ service worker（后台）
 
 **API 调用必须在 service worker 里。** content script 受宿主页面 CSP 约束，GitHub、Notion、多数新闻站会直接 block 掉 fetch。而且 API Key 不该出现在页面上下文里。
 
-**上下文窗口往外扩到段落边界。** 避免从半句话开始，模型判断语义时不会被截断的句子带偏。
+**上文全给，下文给 1000 字符。** 你读到哪，模型就看到哪 —— 一个词的定义常常出现在文章更靠前的地方，只给附近几百字会够不着。下文的切口往外扩到段落或句子边界，不从半句话中断。
 
-**上下文排在选中词前面。** DeepSeek 的缓存是前缀匹配的，同一段里连查几个词，窗口一致就能命中。
+**上文排在选中词之前。** 缓存按 token 前缀匹配，这个顺序是死的；反过来每次都是全量 miss。
+
+**超长文才降级。** 正文超过 16 万字符时退回「开头 + 选中处附近一段」，截断点量化到 8k 边界，让相邻的词共用同一份前缀，不至于查一个词就全量 miss 一次。
 
 **浮层位置在开窗时一次算定。** 流式输出时卡片不再重新定位——否则文字每流进来一块就往上顶一下，一顿一顿的。
 
@@ -234,7 +248,7 @@ Your key is stored in `chrome.storage.local` on your machine only. Nothing passe
 
 ## Notes
 
-- Only the context window around your selection is sent (750 chars before, 1000 after), not the whole article
+- Everything above your selection is sent, plus 1,000 characters after it. Since you read top-down, each lookup's context is a prefix of the next one, so DeepSeek's prefix cache hits ~98% after the first request
 - Prompt and output style live in [`src/background/prompt.ts`](src/background/prompt.ts); ten reference examples are in [`docs/gold-examples.md`](docs/gold-examples.md)
 - The API key is bundled client-side, which is fine for personal use. Publishing to the Chrome Web Store would require a backend proxy — one file, `src/background/deepseek.ts`
 
