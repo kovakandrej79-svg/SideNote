@@ -8,16 +8,48 @@ export interface Pick {
   range: Range;
 }
 
-const PREFERRED_BLOCKS = "p,li,td,th,dd,dt,blockquote,figcaption,h1,h2,h3,h4,h5,h6";
+const PREFERRED_BLOCKS = "p,li,td,th,dd,dt,blockquote,figcaption,h1,h2,h3,h4,h5,h6,math,mrow";
+
+/**
+ * 值得解释的字符。除了拉丁字母和数字，还必须认这些，否则公式一概不触发：
+ *   U+0370–03FF  希腊字母        α β σ Δ Σ
+ *   U+2070–209F  上标下标        ⁿ ₁ ₂
+ *   U+2100–214F  类字母符号      ℝ ℕ ℓ ℮
+ *   U+2190–23FF  箭头 + 数学算子  → ∀ ∈ ∑ ∫ ≤ ≠ √ ∞
+ *   U+2A00–2AFF  补充算子        ⨁ ⨂
+ *   U+1D400–1D7FF 数学字母数字   𝑋 𝑛 𝒩 𝔽  ← MathML 渲染的公式落在这里
+ * 另加 ± × ÷ ° µ 这几个散落在 Latin-1 里的常用符号。
+ */
+const MEANINGFUL =
+  /[A-Za-z0-9±µ°×÷Ͱ-Ͽ⁰-₟℀-⅏←-⏿⨀-⫿\u{1D400}-\u{1D7FF}]/u;
+
+/** 纯中文（含中文标点）多半是误选，不触发 */
+const CJK_ONLY = /^[\s　-〿一-鿿＀-￯]+$/u;
+
+/** 看着像散文（有空格、且主要是拉丁字母），才套词数上限 */
+const PROSE = /^[\sA-Za-z0-9'’\-–—,.;:()"“”]+$/;
+
+/**
+ * 选中的内容值不值得解释。
+ * 门槛只拦三样：空白、纯标点、以及明显是误选整段的长文本。
+ * 公式、符号、缩写、单个字母一律放行 —— 读论文时它们恰恰是最需要解释的。
+ */
+export function worthExplaining(word: string): boolean {
+  if (!word) return false;
+  if (CJK_ONLY.test(word)) return false;
+  if (!MEANINGFUL.test(word)) return false;
+  if (word.length > 200) return false;
+  // 公式没有空格，词数上限会误伤，所以只对散文生效
+  if (PROSE.test(word) && word.split(" ").length > 16) return false;
+  return true;
+}
 
 export function readSelection(): Pick | null {
   const sel = window.getSelection();
   if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
 
   const word = sel.toString().trim().replace(/\s+/g, " ");
-  if (!word) return null;
-  if (!/[A-Za-z]/.test(word)) return null; // 纯数字/标点/中文不触发
-  if (word.length > 120 || word.split(" ").length > 12) return null; // 误选整段
+  if (!worthExplaining(word)) return null;
 
   const range = sel.getRangeAt(0);
   const block = nearestBlock(range.startContainer);
@@ -49,6 +81,9 @@ function offsetInBlock(range: Range, block: HTMLElement | null): number {
 /**
  * 找"选中处所在的段落"。不能直接 closest('div') —— 可能命中整个页面容器。
  * 先找语义块级元素，不行再往上走到文本量合适的祖先。
+ *
+ * 选中公式时最近的块级元素往往是 <math>，那里面只有公式没有上下文，
+ * 所以文本太少就继续往上找，直到拿到一段真正的正文。
  */
 function nearestBlock(node: Node): HTMLElement | null {
   const start =
@@ -56,9 +91,9 @@ function nearestBlock(node: Node): HTMLElement | null {
   if (!start) return null;
 
   const preferred = start.closest<HTMLElement>(PREFERRED_BLOCKS);
-  if (preferred && (preferred.textContent?.length ?? 0) > 20) return preferred;
+  if (preferred && (preferred.textContent?.length ?? 0) > 60) return preferred;
 
-  let el: HTMLElement | null = start;
+  let el: HTMLElement | null = preferred ?? start;
   while (el) {
     const len = el.textContent?.length ?? 0;
     if (len >= 60 && len <= 4000) return el;
